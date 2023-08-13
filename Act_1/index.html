@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="es">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>'irbin johen actividad fill'</title>
+    <style>
+        canvas{
+            background-color: rgb(217, 186, 186);
+        }
+
+        body{
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <center>
+    <canvas width="600" height="600" id="myCanvas"></canvas>
+    <script>
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = "#7F89DF";
+        ctx.fillRect(50,50, 80,80);
+
+        ctx.fillStyle = "#BB271E";
+        ctx.fillRect(110,110,80,80);
+        
+        ctx.fillStyle = "#F39DFB";
+        ctx.fillRect(170,170,80,80);
+   
+    </script>
+    </center>
+</body>
+</html>
