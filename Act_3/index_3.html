@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="es">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>'Jorge Garcia Vega actividad '</title>
+    <style>
+        canvas{
+            background-color: rgb(217, 186, 186);
+        }
+
+        body{
+            background-color: rgb(31, 211, 196);
+        }
+    </style>
+
+
+<html>
+<head>
+    <style>
+        canvas{
+            background-color: #79d32a;
+        }
+    </style>
+</head>
+<body>
+
+<canvas width="900" height="900" id="myCanvas"></canvas>
+<script>
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    ctx.beginPath();
+    ctx.arc(250, 70, 50, 0, 2 * Math.PI);
+    ctx.fillStyle = "blue";
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.arc(200, 70, 50, 0, 2 * Math.PI);
+    ctx.strokeStyle = "blue";
+    ctx.stroke();
+    ctx.closePath()
+
+</script>
+</body>
+</html>
