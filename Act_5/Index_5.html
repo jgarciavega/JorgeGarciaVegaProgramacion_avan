@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>'Jorge Garcia Vega actividad '</title>
+    <style>
+        canvas{
+            background-color: rgb(217, 186, 186);
+        }
+
+        body{
+            background-color: rgb(105, 239, 228);
+        }
+    </style>
+<html>
+    <head>
+        <style>
+            canvas{
+                background-color: #f4e7e7;
+            }
+        </style>
+    </head>
+    <body>
+    
+    <canvas width="500" height="500" id="myCanvas"></canvas>
+    <script>
+        var canvas = document.getElementById("myCanvas")
+        var ctx = canvas.getContext("2d")
+        var grd = ctx.createLinearGradient(0,0,170,0)
+    
+        
+        grd.addColorStop(1, "#B2B3AF");
+        grd.addColorStop(0, "#DCDED5");
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, 100, 180);
+    
+    </script>
+    </body>
+    </html>
