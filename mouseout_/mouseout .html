@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dibujar Figuras en Canvas</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+
+    <script>
+        // Obtener el elemento canvas y su contexto
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        
+        var dibujarCuadrado = false;
+        var figuraDibujada = false;
+        var dentroDelLienzo = false;
+
+        // Evento mouseenter: establecer bandera de dentro del lienzo
+        canvas.addEventListener("mouseenter", function() {
+            dentroDelLienzo = true;
+        });
+
+        // Evento mouseleave: restablecer banderas al salir del lienzo
+        canvas.addEventListener("mouseleave", function() {
+            dentroDelLienzo = false;
+            figuraDibujada = false;
+        });
+
+        // Evento mousedown: dibujar círculo o cuadrado en la posición del clic
+        canvas.addEventListener("mousedown", function(event) {
+            if (dentroDelLienzo && !figuraDibujada) {
+                figuraDibujada = true;
+                var x = event.clientX - canvas.offsetLeft;
+                var y = event.clientY - canvas.offsetTop;
+
+                ctx.fillStyle = generarColorAleatorio();
+                if (dibujarCuadrado) {
+                    // Dibujar un cuadrado en la posición del clic
+                    var lado = 50;
+                    ctx.fillRect(x - lado / 2, y - lado / 2, lado, lado);
+                } else {
+                    // Dibujar un círculo en la posición del clic
+                    var radius = Math.random() * 50 + 10;
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+                dibujarCuadrado = !dibujarCuadrado;
+            }
+        });
+
+        // Función para generar un color aleatorio en formato hexadecimal
+        function generarColorAleatorio() {
+            var colorHex = "#" + Math.floor(Math.random() * 16777215).toString(16);
+            return colorHex;
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
