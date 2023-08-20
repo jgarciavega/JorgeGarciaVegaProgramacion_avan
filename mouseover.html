@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>circulos usando mousedown</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+
+    <script>
+        // Obtener el elemento canvas y su contexto
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        // Variable para controlar si se puede dibujar
+        var puedeDibujar = true;
+
+        // Evento mousedown: dibujar un círculo en la posición del clic si se puede dibujar
+        canvas.addEventListener("mousedown", function(event) {
+            if (puedeDibujar) {
+                var x = event.clientX - canvas.offsetLeft;
+                var y = event.clientY - canvas.offsetTop;
+                
+                // Calcular un radio aleatorio para el círculo
+                var radius = Math.random() * 60 + 20;
+                
+                // Generar un color aleatorio en formato hexadecimal
+                var color = "#" + Math.floor(Math.random()*16777215).toString(16);
+                
+                // Dibujar el círculo con el color aleatorio
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, 2 * Math.PI);
+                ctx.fillStyle = color;
+                ctx.fill();
+                
+                // Evitar que se dibujen más círculos hasta que se salga y entre nuevamente al lienzo
+                puedeDibujar = false;
+            }
+        });
+
+        // Evento mouseleave: permitir dibujar nuevamente al salir del lienzo
+        canvas.addEventListener("mouseleave", function() {
+            puedeDibujar = true;
+        });
+    </script>
+</body>
+</html>
