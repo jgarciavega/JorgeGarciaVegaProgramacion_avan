@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e63b3b;
+  }
+  canvas {
+    border: 2px solid #000;
+  }
+</style>
+</head>
+<body>
+  <canvas id="avatarCanvas" width="500" height="500"></canvas>
+
+  <script>
+    const canvas = document.getElementById('avatarCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Dibujar el avatar de busto
+    // Fondo
+    ctx.fillStyle = "#9FB4B4";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Cabeza
+    ctx.fillStyle = "#8D5524";
+    ctx.beginPath();
+    ctx.arc(150, 170, 70, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Ojos
+    ctx.fillStyle = "#FFFFFF";
+    ctx.beginPath();
+    ctx.arc(125, 150, 7, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(175, 150, 7, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Lentes de aumento
+    ctx.fillStyle = "#000";
+    ctx.fillRect(120, 147, 10, 4);
+    ctx.fillRect(170, 147, 10, 4);
+
+    // Boca
+    ctx.strokeStyle = "#000";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(150, 180, 25, 0.2 * Math.PI, 0.8 * Math.PI);
+    ctx.stroke();
+
+    // Gorra
+    ctx.fillStyle = "#2C3E50";
+    ctx.fillRect(90, 90, 150, 40);
+
+    // Logo en la gorra
+    ctx.fillStyle = "#5DADE2 ";
+    ctx.beginPath();
+    ctx.moveTo(150, 100);
+    ctx.lineTo(130, 120);
+    ctx.lineTo(170, 120);
+    ctx.closePath();
+    ctx.fill();
+
+    // Playera
+    ctx.fillStyle = "#E50A9F";
+    ctx.fillRect(100, 225, 110, 100);
+    ctx.fillStyle = "#000";
+    ctx.font = "11px Arial";
+    ctx.fillText("Jorge Garcia IDS", 110, 300);
+
+  </script>
+</body>
+</html>
+
