@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  /* Estilos para el canvas */
+  canvas {
+    border: 4px solid black;
+    background-color: #cac3db; /* Color de fondo pastel */
+  }
+</style>
+</head>
+<body>
+  <!-- El lienzo en el que dibujaremos la figura -->
+  <canvas id="myCanvas" width="600" height="600"></canvas>
+
+  <script>
+    // Integración de requestAnimationFrame
+    window.requestAnimationFrame = (function () {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        function (callback) {
+          window.setTimeout(callback, 17);
+        };
+    })();
+
+    // Resto del código...
+
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const figure = {
+      x: canvas.width / 2, // Posición horizontal centrada
+      y: canvas.height / 2, // Posición vertical centrada
+      width: 60,
+      height: 60,
+      speed: 2,
+      dx: 0,
+      dy: 0
+    };
+
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    function drawFigure(color) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiamos el canvas
+      ctx.fillStyle = color;
+      ctx.fillRect(figure.x, figure.y, figure.width, figure.height); // Dibujamos la figura
+    }
+
+    function updatePosition() {
+      const color = getRandomColor();
+      figure.x += figure.dx * figure.speed;
+      figure.y += figure.dy * figure.speed;
+
+      // Si la figura sale por un lado, aparece por el lado opuesto
+      if (figure.x > canvas.width) {
+        figure.x = -figure.width;
+      } else if (figure.x < -figure.width) {
+        figure.x = canvas.width;
+      }
+
+      if (figure.y > canvas.height) {
+        figure.y = -figure.height;
+      } else if (figure.y < -figure.height) {
+        figure.y = canvas.height;
+      }
+
+      drawFigure(color);
+      requestAnimationFrame(updatePosition);
+    }
+
+    // Iniciamos la animación
+    updatePosition();
+
+    // Eventos al presionar y soltar una tecla
+    document.addEventListener('keydown', (event) => {
+      switch (event.key) {
+        case 'ArrowUp':
+          figure.dy = -1;
+          break;
+        case 'ArrowDown':
+          figure.dy = 1;
+          break;
+        case 'ArrowLeft':
+          figure.dx = -1;
+          break;
+        case 'ArrowRight':
+          figure.dx = 1;
+          break;
+      }
+    });
+
+    document.addEventListener('keyup', () => {
+      figure.dx = 0;
+      figure.dy = 0;
+    });
+
+  </script>
+</body>
+</html>
+
+
+
