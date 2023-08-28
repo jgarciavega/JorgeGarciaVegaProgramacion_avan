@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Casa, Árbol y Nube</title>
+</head>
+<body>
+  <canvas id="myCanvas" width="400" height="300"></canvas>
+  
+  <script>
+    // Obtén el contexto del lienzo
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    // Dibuja un fondo azul (cielo)
+    ctx.fillStyle = "#87CEEB"; // Color azul cielo
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Dibuja una nube
+    ctx.fillStyle = "#FFFFFF"; // Color blanco
+    ctx.beginPath();
+    ctx.arc(60, 80, 20, 0, Math.PI * 2);
+    ctx.arc(110, 65, 40, 0, Math.PI * 2);
+    ctx.arc(140, 80, 30, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Dibuja un árbol
+    ctx.fillStyle = "#5CA411"; // Color marrón
+    ctx.fillRect(270, 160, 40, 100); // Tronco del árbol
+
+    ctx.fillStyle = "#5CA411"; // Color verde
+    ctx.beginPath();
+    ctx.arc(270, 120, 50, 0, Math.PI * 2); // Parte superior del árbol
+    ctx.arc(310, 120, 50, 0, Math.PI * 2);
+    ctx.arc(280, 100, 50, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Dibuja una casa
+    ctx.fillStyle = "#FFA07A"; // Color salmón claro
+    ctx.fillRect(40, 150, 100, 110); // Cuerpo de la casa
+
+    ctx.fillStyle = "#8B0000"; // Color rojo oscuro
+    ctx.beginPath();
+    ctx.moveTo(140, 155); // Esquina izquierda del techo
+    ctx.lineTo(100, 100); // Pico del techo
+    ctx.lineTo(40, 150); // Esquina derecha del techo
+    ctx.closePath();
+    ctx.fill();
+
+    // Dibuja una puert4
+    ctx.fillStyle = "#8B4513"; // Color marrón
+    ctx.fillRect(65, 220, 20, 30);
+
+    // Dibuja ventanas
+    ctx.fillStyle = "#ADD8E6"; // Color azul claro
+    ctx.fillRect(40, 170, 25, 25);
+    ctx.fillRect(100, 170, 25, 25);
+  </script>
+</body>
+</html>
+
