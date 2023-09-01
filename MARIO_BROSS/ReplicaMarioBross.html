@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario Bros</title>
+    <style>
+        canvas{
+            background-color: #2bb4da;
+        }
+    </style>
+</head>
+<body>
+
+<canvas width="640" height="360" id="myCanvas"></canvas>
+<script>
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    /* Suelo */
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "#EAD1BA";
+    ctx.fillRect(0, 324, 640, 12);
+    ctx.strokeRect(0, 324, 640, 12);
+
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "#F29C72";
+    ctx.fillRect(0, 336, 640, 24);
+    ctx.strokeRect(0, 336, 640, 24);
+
+    /* Bloques 1 y 2 */
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "#ACB6B2";
+    ctx.strokeRect(100, 100, 38, 38);
+    ctx.fillRect(100, 100, 38, 38);
+
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "#FF905F";
+    ctx.strokeRect(138, 100, 38, 38);
+    ctx.fillRect(138, 100, 38, 38);
+
+    /* Bloque 3 */
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "#6B7E85";
+    ctx.strokeRect(200, 200, 38, 38);
+    ctx.fillRect(200, 200, 38, 38);
+
+    /* Bloque 4 */
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "#D7CD2B";
+    ctx.strokeRect(580, 84, 38, 38);
+    ctx.fillRect(580, 84, 38, 38);
+
+    /* P Bloques  */
+    ctx.fillStyle = "black";
+    ctx.fillRect(103, 103, 2, 2);
+    ctx.fillRect(130, 103, 2, 2);
+    ctx.fillRect(103, 130, 2, 2);
+    ctx.fillRect(130, 130, 2, 2);
+
+    ctx.fillRect(141, 103, 2, 2);
+    ctx.fillRect(170, 103, 2, 2);
+    ctx.fillRect(141, 130, 2, 2);
+    ctx.fillRect(170, 130, 2, 2);
+
+    ctx.fillRect(203, 203, 2, 2);
+    ctx.fillRect(231, 203, 2, 2);
+    ctx.fillRect(203, 231, 2, 2);
+    ctx.fillRect(231, 231, 2, 2);
+
+    ctx.fillRect(582, 86, 2, 2);
+    ctx.fillRect(582, 118, 2, 2);
+    ctx.fillRect(614, 86, 2, 2);
+    ctx.fillRect(614, 118, 2, 2);
+
+    /* Segundo Cuadrado */
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "#AFAE9F";
+    ctx.strokeRect(226, 124, 118, 199);
+    ctx.fillRect(226, 124, 118, 199);
+
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "black";
+    ctx.strokeRect(346, 142, 20, 181);
+    ctx.fillRect(346, 142, 20, 181);
+
+    /* Cuadrado */
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "#148AD1";
+    ctx.strokeRect(143, 201, 116, 122);
+    ctx.fillRect(143, 201, 116, 122);
+
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "black";
+    ctx.strokeRect(260, 222, 20, 100);
+    ctx.fillRect(260, 222, 20, 100);
+
+    /* Primer tubo */
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "#B8D8A4";
+    ctx.strokeRect(422, 204, 80, 40);
+    ctx.fillRect(422, 204, 80, 40);
+
+    /* tubo */
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "#1D860D";
+    ctx.strokeRect(426, 245, 73, 79);
+    ctx.fillRect(426, 245, 73, 79);
+
+    /*Background Cuadrado */
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "#FEC4B6";
+    ctx.strokeRect(545, 201, 116, 122);
+    ctx.fillRect(545, 201, 116, 122);
+</script>
+</body>
+</html>
