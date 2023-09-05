@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pisaje sonic's</title>
+</head>
+<body>
+    <canvas id="miCanvas" width="800" height="600"></canvas>
+
+    <script>
+        // Obtén el elemento canvas
+        var canvas = document.getElementById('miCanvas');
+        var ctx = canvas.getContext('2d');
+
+       //fondo
+       ctx.beginPath();
+       ctx.fillStyle = '#2000A0';
+       ctx.fillRect(0, 0, 800, 700);
+       ctx.closePath();
+
+        // Dibuja el rectángulo cuadriculado
+        var color = false;
+        var tamañoCuadricula = 30;
+        for (var x = 0; x < 800; x += tamañoCuadricula) {
+            for (var y = 400; y < 600; y += tamañoCuadricula) {
+                if (color) {
+                    ctx.fillStyle = '#301000';
+                } else {
+                    ctx.fillStyle = '#C06000';
+                }
+                ctx.fillRect(x, y, tamañoCuadricula, tamañoCuadricula);
+                color = !color;
+            }
+        }
+
+        // Dibuja las palmeras
+        ctx.beginPath();
+        ctx.fillStyle = 'green';
+        ctx.fillRect(620, 100, 20, 300); // Palmera 1
+        ctx.fillRect(695, 280, 10, 120); 
+
+        ctx.closePath();
+        
+        // Obtener el elemento canvas y su contexto 2D
+
+
+
+
+
+
+        ctx.beginPath();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = 'yellow';
+        ctx.arc(250,340,25,0,2*Math.PI);
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.fillStyle = "rgba(75,78,70,0.7)";
+        ctx.fillRect(0, 390, 820, 40);
+
+        ctx.fillStyle = "rgba(166,227,63)";
+        ctx.fillRect(0, 380, 820, 20);
+
+        ctx.beginPath();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = 'yellow';
+        ctx.arc(350,340,25,0,2*Math.PI);
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = 'yellow';
+        ctx.arc(450,340,25,0,2*Math.PI);
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.fillStyle = 'yellow';
+        ctx.beginPath();
+        ctx.arc(700, 300, 40, 0, Math.PI * 2); // Pétalos
+        ctx.fill();
+        ctx.closePath();
+        ctx.beginPath();
+        ctx.fillStyle = 'brown';
+        ctx.beginPath();
+        ctx.arc(700, 300, 20, 0, Math.PI * 2); // Pétalos
+        ctx.fill();
+        ctx.closePath();
+        
+
+  
+
+    </script>
+</body>
+</html>
