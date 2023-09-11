@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue.js App</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <style>
+        
+
+        .contador{
+            font-size: 44px; 
+            font-family: Arial, sans-serif; 
+            color: rgb(137, 114, 45);
+        }
+
+
+        .saludo {
+            color: rgb(91, 87, 128); 
+            font-size: 30px; 
+        }
+       .suma{
+        color: rgb(159, 216, 89); 
+            font-size: 80px; 
+       }
+
+        .resultado {
+            color: rgb(66, 15, 205); 
+            font-size: 35px; 
+        }
+
+       
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Contador de clicks -->
+        <h1 class="contador">Contador : {{ clickCount }}</h1>
+        <button @click="incrementClickCount">Has Clics</button>
+
+        <!-- Saludo  -->
+        <h1 class="saludo">HOLA: {{ name }}</h1>
+        <input v-model="name" @input="validateName" placeholder="Ingresa tu nombre">
+
+        <!-- Suma de dos números -->
+        <h1 class="Suma"> Suma : {{suma }}</h1>
+
+        <input v-model.number="num1" type="number" placeholder="Número 1">
+        <input v-model.number="num2" type="number" placeholder="Número 2">
+        <button @click="sumNumbers">Sumar</button>
+
+        <!-- Resultado de la suma -->
+        <p class="resultado">Resultado: {{ sum }}</p>
+    </div>
+
+    <script>
+        // Inicializa la instancia de Vue
+        const app = new Vue({
+            el: '#app', // El elemento HTML con el que se relacionará Vue.js
+            data: {
+                clickCount: 0, // Contador de clics
+                name: '', 
+                num1: 0,
+                num2: 0,
+                sum: 0,
+            },
+            methods: {
+                // Método para incrementar el contador 
+                incrementClickCount() {
+                    this.clickCount++;
+                },
+                // Método para sumar dos números
+                sumNumbers() {
+                    this.sum = this.num1 + this.num2;
+                },
+                // Método para validar el campo de entrada de nombre
+                validateName() {
+                    // Reemplaza cualquier carácter que no sea una letra con una cadena vacía
+                    this.name = this.name.replace(/[^a-zA-Z]/g, '');
+                },
+            },
+        });
+    </script>
+</body>
+</html>
