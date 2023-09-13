@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACT 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        #app {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        fieldset {
+            margin-bottom: 10px;
+        }
+        legend {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        ol {
+            text-align: left;
+            padding-left: 20px;
+        }
+        hr {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 0;
+            border-top: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <form>
+            <fieldset>
+                <legend>Name(s):</legend>
+                <input type="text" v-model="name" placeholder="Write here">
+            </fieldset>
+    
+            <fieldset>
+                <legend>Last Name(s):</legend>
+                <input type="text" v-model="lastname" placeholder="Write here">
+            </fieldset>
+            <button type="button" v-on:click="savePerson">Save Data</button>
+        </form>
+
+        <ol>
+            <li v-for="p in people">
+                {{ p.nombre }} {{ p.apellido }}
+            </li>
+        </ol>
+
+        <hr>
+
+        <button @click="count++">
+            Click Me {{ count }}
+        </button>
+
+        <h1>
+            Hello {{ username }}
+        </h1>
+
+        <input type="text" v-model="username">
+
+        <br>
+
+        <input type="number" v-model="num1">
+        <input type="number" v-model="num2">
+
+        <button @click="sumar">
+            Sumar
+        </button>
+
+        <h1 v-if="resultado !== 0">Result {{ resultado }}</h1>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript">
+        const { createApp, ref } = Vue
+
+        createApp({
+            data() {
+                return {
+                    count: ref(0),
+                    username: ref(''),
+                    num1: ref(0),
+                    num2: ref(0),
+                    resultado: ref(0),
+                    name: ref(''),
+                    lastname: ref(''),
+                    people: ref([])
+                }
+            },
+            methods: {
+                sumar() {
+                    this.resultado = (+this.num1) + (+this.num2)
+                },
+                savePerson() {
+                    let person = {
+                        nombre: this.name,
+                        apellido: this.lastname
+                    };
+                    this.people.push(person);
+                    this.name = ''; // Limpiar los campos después de guardar
+                    this.lastname = '';
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+</html>
