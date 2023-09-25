@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-for</title>
+
+    <style>
+        table{
+         background-color: rgb(83, 215, 94);
+
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+<div id="app">
+    <form v-if="!authent">
+        <fieldset>
+            <legend>Username:</legend>
+            <input v-model="name"/>
+        </fieldset>
+        <fieldset>
+            <legend>Password:</legend>
+            <input v-model="pas" />
+        </fieldset>
+        <button v-on:click="checkLogin" type="button">Register</button>
+    </form>
+
+    <div v-if="authent">
+        <div>
+            <button v-on:click="logOut">Log Out</button>
+        </div>
+        <div>
+            <label>
+                Nombre
+                <input v-model="newName" />
+
+            </label>
+            <label>
+                Apellidos
+                <input v-model="newApellidos" />
+
+            </label>
+
+            <label>
+                edad
+                <input v-model="newAge" />
+            </label>
+
+            <label for="gender">Género:</label>
+            <select id="gender" name="gender" v-model="newGender">
+              <option value="hombre">Hombre</option>
+              <option value="mujer">Mujer</option>
+            </select>
+            
+            <label>
+                email
+                <input v-model="newEmail" />
+            </label>
+            <button v-on:click="addUser">add</button>
+        </div>
+        <table>
+           
+            <thead>
+                <tr>
+                    
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>email</th>
+                    <th> Edad</th>
+                    <th>Genero</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="user in persons">
+                    
+                    <td>{{user.firstName}}</td>
+                    <td> {{user.lastName}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.age}}</td>
+                    <td> {{user.gender}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script type="application/javascript">
+
+    const {createApp, ref} = Vue
+
+
+    createApp({
+        setup() {
+
+            return {
+                name: ref(''),
+                pas: ref(''),
+                newName: ref(''),
+                newAge: ref(''),
+                newEmail: ref(''),
+                persons: ref([]),
+                authent: ref(false),
+                newApellidos: ref(''),
+                newgender: ref('Hombre')
+            }
+        },
+        methods:{
+            async fetchUsers() {
+                const response = await fetch('/json/logins.json');
+                const users = await response.json();
+                this.persons = users;
+            },
+            async checkLogin() {
+                const username = this.name;
+                const pass = this.pas;
+                let auth = false;
+                let obj = [];
+
+                await this.fetchUsers();
+
+                // console.log(users);
+                if (Array.isArray(this.persons)){
+                    this.persons.map(user => {
+                        if (user.username === username && user.password === pass){
+                            auth = true;
+                            obj.push({name: user.username, passw: user.password});
+                        }
+                    });
+                }
+
+                if (auth){
+                    alert(JSON.stringify(obj) + ' Logged In')
+                    this.authent = true;
+                    localStorage.setItem('session', JSON.stringify(obj));
+                } else {
+                    console.log('nope')
+                }
+            },
+            logOut() {
+                localStorage.removeItem('session');
+                this.authent = false;
+            },
+            addUser(){
+                this.persons.push({"firstName": this.newName , "lastName": this.newApellidos, "age": this.newAge, "genero": this.newGender, "email": this.newEmail})
+                console.log(this.persons)
+            }
+        },
+        mounted(){
+            const session = JSON.parse(localStorage.getItem('session'));
+
+            if (session){
+                this.authent = true;
+                this.name = session[0].name;
+                this.pas = session[0].passw;
+                this.fetchUsers();
+            }
+
+        }
+    }).mount('#app')
+
+</script>
+
+</body>
+</html>
