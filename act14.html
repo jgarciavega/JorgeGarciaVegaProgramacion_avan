@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        table{
+            background-color: rgb(218, 197, 172);
+            width: 100%;
+            text-align: center;
+        }
+        td, th{
+            border: 4px solid #6a0bc9;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <form v-if="!authent">
+        <fieldset>
+            <legend>Usuario:</legend>
+            <input v-model="name"/>
+        </fieldset>
+        <fieldset>
+            <legend>Contraseña:</legend>
+            <input v-model="pas" />
+        </fieldset>
+        <button v-on:click="checkLogin" type="button">Iniciar sesión</button>
+    </form>
+
+    <div v-if="authent">
+        <div>
+            <button v-on:click="logOut">Cerrar sesión</button>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Usuario</th>
+                <th>Correo electrónico</th>
+                <th>Eliminar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(user, index) in persons">
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>
+                    <button @click="editUser(user, index)" type="button">Editar</button>
+                    <button @click="deleteUser(index)" type="button">Eliminar</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <div v-if="!addUserButton && !editUserButton">
+                <button v-on:click="addUserButtonMethod">Agregar Usuario</button>
+            </div>
+            <div v-if="addUserButton || editUserButton">
+                <label>
+                    Nombre
+                    <input v-model="newName" />
+                </label>
+                <label>
+                    Apellidos
+                    <input v-model="newLastName" />
+                </label>
+                <label>
+                    Usuario
+                    <input v-model="newUserName" />
+                </label>
+                <label>
+                    Correo electrónico
+                    <input v-model="newEmail" />
+                </label>
+                <button v-on:click="addUser" v-if="addUserButton">Agregar</button>
+                <button v-on:click="saveEditedUser" v-if="editUserButton">Guardar</button>
+                <button v-on:click="closeDiv">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script type="application/javascript">
+
+    const {createApp, ref} = Vue
+
+    createApp({
+        setup() {
+
+            return {
+                name: ref(''),
+                pas: ref(''),
+                newName: ref(''),
+                newLastName: ref(''),
+                newUserName: ref(''),
+                newEmail: ref(''),
+                persons: ref([]),
+                authent: ref(false),
+                tempIndex: ref(''),
+                addUserButton: ref(false),
+                editUserButton: ref(false)
+            }
+        },
+        methods:{
+            async fetchUsers() {
+                const response = await fetch('/json/logins.json');
+                const users = await response.json();
+                this.persons = users;
+            },
+            async checkLogin() {
+                const username = this.name;
+                const pass = this.pas;
+                let auth = false;
+                let obj = [];
+
+                await this.fetchUsers();
+
+                if (Array.isArray(this.persons)){
+                    this.persons.map(user => {
+                        if (user.username === username && user.password === pass){
+                            auth = true;
+                            obj.push({name: user.username, passw: user.password});
+                        }
+                    });
+                }
+
+                if (auth){
+                    alert(JSON.stringify(obj) + ' Inició sesión')
+                    this.authent = true;
+                    localStorage.setItem('session', JSON.stringify(obj));
+                } else {
+                    console.log('No se pudo iniciar sesión')
+                }
+            },
+            logOut() {
+                localStorage.removeItem('session');
+                this.authent = false;
+            },
+            addUser(){
+                this.persons.push({"firstName": this.newName, "lastName": this.newLastName,"username": this.newUserName, "email": this.newEmail});
+                this.addUserButtonMethod()
+                console.log(this.persons);
+            },
+            deleteUser: function(index){
+                console.log(index);
+                this.persons.splice(index, 1);
+            },
+            editUser: function(user, index){
+                this.newName = user.firstName;
+                this.newLastName = user.lastName;
+                this.newEmail = user.email;
+                this.newUserName = user.username;
+                this.tempIndex = index;
+
+                this.editUserButton = !this.editUserButton;
+            },
+            saveEditedUser(){
+                this.persons[this.tempIndex] = {"firstName": this.newName, "lastName": this.newLastName,"username": this.newUserName, "email": this.newEmail};
+                this.editUserButton = !this.editUserButton;
+            },
+            addUserButtonMethod(){
+                this.addUserButton = !this.addUserButton;
+                this.newName = '';
+                this.newLastName = '';
+                this.newUserName = '';
+                this.newEmail = '';
+            },
+            closeDiv(){
+                this.addUserButton = false;
+                this.editUserButton = false;
+            }
+        },
+        mounted(){
+            const session = JSON.parse(localStorage.getItem('session'));
+
+            if (session){
+                this.authent = true;
+                this.name = session[0].name;
+                this.pas = session[0].passw;
+                this.fetchUsers();
+            }
+
+        }
+    }).mount('#app')
+
+</script>
+
+</body>
+</html>
