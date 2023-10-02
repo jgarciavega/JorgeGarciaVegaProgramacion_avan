@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+        }
+        #app{
+            background-color: #2861d4;
+            padding-bottom: 50px;
+        }
+        ul{
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        li{
+            list-style: none;
+            display: flex;
+            background-color: #c0c0d7;
+            color: #3d307d;
+            padding: 50px 30px;
+            margin-bottom: 0px;
+            border-radius: 40px;
+            max-width: 800px;
+            cursor: pointer;
+        }
+        .movie-poster{
+            width: 300px;
+            margin-right: 30px;
+        }
+        .movie-img{
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            box-shadow: 0px 18px 62px -43px rgba(247,247,247,0.75);
+        }
+        .movie-img img{
+            object-fit: none;
+            object-position: 50% 50%;
+            width: 100%;
+        }
+        img{
+            width: inherit;
+        }
+        .movie-main-desc-info{
+            display: flex;
+            flex-direction: column;
+            /*max-width: 400px;*/
+            /*justify-content: space-between;*/
+            font-size: 16px;
+        }
+        .movie-main-desc-info div{
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+        }
+        .movie-main{
+            max-width: 70vw;
+            margin: 30px auto;
+        }
+        .movie-main-desc{
+            display: flex;
+            color: #FFFFFF;
+        }
+        .movie-main-genres{
+            display: flex;
+            justify-content: space-evenly;
+            width: 600px;
+        }
+        .movie-main-desc-stats a{
+            color: #F7F7F7;
+            text-decoration: none;
+            transition: color 50ms ease-in-out;
+        }
+        .movie-main-desc-stats a:hover{
+            color: antiquewhite;
+        }
+        .movie-main-companies{
+            display: flex;
+            width: 200px;
+        }
+        .movie-main-companies-container{
+            display: inline-block;
+            height: fit-content;
+        }
+        .movie-main-companies img{
+            max-height: 40px;
+            width: auto;
+            margin-left: 10px;
+        }
+        .star {
+            cursor: pointer;
+            font-size: 30px;
+            color: #ddd;
+        }
+        .star.active {
+            color: #fde16d;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div class="movie-img">
+        <img :src="imageUrl" alt="Movie Image">
+    </div>
+    <div class="movie-main">
+        <div class="movie-main-desc">
+            <div class="movie-poster">
+                <img :src="posterUrl" alt="Movie Poster">
+            </div>
+            <div class="movie-main-desc-info">
+                <h1>{{ movie.title }}</h1>
+                <div>
+                    <p>Rating:</p>
+                    <p v-if="!rating">{{movie.vote_average}}</p>
+                    <p v-if="rating">{{rating}}</p>
+                    <div class="rating">
+                        <span class="star" v-for="(item, index) in 10" :class="{ active: index < stars }" @click="setRating(index + 1, originalRating, originalCount)">&#9733;</span>
+                    </div>
+                </div>
+                <div class="movie-main-desc-info-extras">
+                    <div class="movie-main-desc-stats">
+                        <p>Presupuesto: ${{ formatPrice(movie.budget)}}</p>
+                        <p>Ganancias: ${{ formatPrice(movie.revenue) }}</p>
+                        <p>Duracion: {{movie.runtime}} minutos</p>
+                        <p>Origen: <span v-for="countries in movie.production_countries">{{countries.name}}</span></p>
+                        <span>Link: <a :href="imdb">IMDB</a></span>
+                    </div>
+                    <div>
+                        <p>Generos:</p>
+                        <div class="movie-main-genres">
+                            <span v-for="genre in movie.genres">{{ genre.name }}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <p>Productoras:</p>
+                        <div class="movie-main-companies">
+                            <div class="movie-main-companies-container" v-for="production_img in movie.production_companies">
+                                <img v-if="production_img.logo_path" :src="companyImage + production_img.logo_path" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h3>Descripcion:</h3>
+                <p>{{ movie.overview }}</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script type="application/javascript">
+
+    const {createApp, ref} = Vue
+
+
+    createApp({
+        setup() {
+
+            return {
+                apiKey: ref('45e22b2c11e62b1f9a6b97f12c2fbfb4'),
+                sessionId: ref(sessionStorage.getItem('sessionId')),
+                movieId: ref(sessionStorage.getItem('movieId')),
+                movie: ref({}),
+                imagePath: ref('https://image.tmdb.org/t/p/original'),
+                posterUrl: ref(''),
+                imageUrl: ref(''),
+                imdb: ref(''),
+                companyImage: ref('https://image.tmdb.org/t/p/w200'),
+                originalRating: ref(''),
+                originalCount: ref(''),
+                counting: ref(''),
+                rating: ref(0),
+                stars: ref(0)
+            }
+        },
+        methods:{
+            async getMovie() {
+                const response = await fetch(`https://api.themoviedb.org/3/movie/${this.movieId}?api_key=${this.apiKey}&session_id=${this.sessionId}`);
+                const data = await response.json();
+                this.movie = data;
+                this.posterUrl = `https://image.tmdb.org/t/p/original${data.poster_path}`;
+                this.imageUrl = `https://image.tmdb.org/t/p/original${data.backdrop_path}`;
+                this.imdb = `https://www.imdb.com/title/${data.imdb_id}`;
+                this.originalRating = data.vote_average;
+                this.originalCount = data.vote_count;
+                this.counting = data.vote_count;
+            },
+            formatPrice(value) {
+                let val = (value/1).toFixed(2).replace(',', ',')
+                return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            },
+            setRating(rating, oRating, oCount) {
+                let double_rating, new_rating, new_count;
+                double_rating = rating *2;
+                new_rating = (oRating*oCount) + double_rating;
+                new_count = oCount + 1;
+                this.rating = (new_rating/new_count).toFixed(3);
+                this.stars = rating.toFixed(3)
+                console.log(rating)
+            }
+        },
+        created(){
+            this.getMovie();
+        },
+        mounted(){
+        }
+    }).mount('#app')
+
+</script>
+
+</body>
+</html>
