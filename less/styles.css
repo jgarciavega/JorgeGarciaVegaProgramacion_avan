@@ -2,8 +2,9 @@
 /* Estilos para el formulario */
 .login-container {
   max-width: 350px;
+  max-height: 500px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px;
   border: 1px solid #691010;
   border-radius: 5px;
   background-color: #d48585;
@@ -11,11 +12,11 @@
   text-align: center;
 }
 h2 {
-  font-size: 24px;
-  color: #6659f2;
+  font-size: 40px;
+  color: #5116b7;
 }
 form {
-  margin-top: 20px;
+  margin-top: 5px;
 }
 label {
   display: block;
@@ -24,18 +25,18 @@ label {
 }
 input[type="text"],
 input[type="password"] {
-  width: 90%;
+  width: 70%;
   padding: 10px;
   margin-bottom: 10px;
-  border: 1px solid #e4d829;
-  border-radius: 3px;
+  border: 2px solid #e4d829;
+  border-radius: 10px;
 }
 button {
   background-color: #6659f2;
   color: #d1cede;
   border: none;
-  padding: 10px 10px;
-  border-radius: 4px;
+  padding: 20px 15px;
+  border-radius: 10px;
   cursor: pointer;
 }
 button:hover {
