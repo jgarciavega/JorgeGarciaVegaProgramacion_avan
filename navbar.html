@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel con Login</title>
+    <!-- Incluye Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        
+        .navbar {
+            background-color: #5c0fd9; /* Color de fondo */
+        }
+
+        .navbar-dark .navbar-toggler:focus, .navbar-dark .navbar-toggler:hover {
+            background-color: #a5df1e; /* Color de fondo al pasar el ratón */
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #fff; /* Color del texto de los enlaces */
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #17a2b8; /* Color del texto al pasar el ratón */
+        }
+
+        /* Personaliza el estilo del panel */
+        #panel {
+            display: none;
+        }
+
+ /* Estilo adicional para el menú vertical */
+ .sidebar {
+    height: 40px;
+    width: 5px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: #b6db3c; 
+    padding-top: 60px;
+}
+
+.sidebar a {
+    padding: 15px;
+    text-decoration: none;
+    font-size: 20px;
+    color: rgb(171, 222, 63);
+    display: block;
+}
+
+.sidebar a:hover {
+    background-color: #db9d9d; /* Color de fondo al pasar el cursor */
+}
+
+
+    </style>
+</head>
+<body>
+     <!-- Formulario de inicio de sesión -->
+     <div id="login-form" class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Inicio de Sesión
+                    </div>
+
+                    <div class="card-body">
+                        <form id="login" onsubmit="return redirigir();">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Nombre de Usuario</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="panel">
+       
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand" href=""></a>
+              <img src="Api.webp" alt="logo" width="100px">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="https://apibcs.com.mx/mision-y-vision/">MISION</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="https://apibcs.com.mx/">HOME</a>
+                  </li>
+                 
+                <div class="btn-group">
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Action
+                    </button>
+                    <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                 </ul>
+                </div>
+            
+                  
+                  <li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled href="https://apibcs.com.mx/wp-content/uploads/2023/10/10-10-23.pdf">SERVICIOS</a>
+                  </li>
+                </ul>
+                <form class="d-flex" role="search">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+              </div>
+            </div>
+          </nav>
+
+      
+  </head>
+  <body>
+      <div class="container-fluid">
+          <div class="row">
+              <!-- Menú lateral fijo -->
+              <div class="col-md-3 sidebar">
+                  <a href="https://upstract.com/">Explorar</a>
+                  <a href="https://www.keybr.com/#!game">Notificaciones</a>
+                  <a href="https://zoomquilt.org/">mensajes</a>
+                  <a href="https://www.windows93.net/">Proyectos</a>
+              </div>
+              
+              <!-- Contenido principal -->
+              <div class="col-md-9">
+                  <!-- Aquí colocarás el contenido principal de tu página -->
+              </div>
+          </div>
+      </div>
+    
+    <script>
+        function iniciarSesion() {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('panel').style.display = 'block';
+        }
+
+        function toggleVerticalMenu() {
+            var verticalMenu = document.getElementById('vertical-menu');
+            if (verticalMenu.style.display === 'none' || verticalMenu.style.display === '') {
+                verticalMenu.style.display = 'block';
+            } else {
+                verticalMenu.style.display = 'none';
+            }
+        }
+
+        function redirigir() {
+            iniciarSesion();
+            return false; // Evita que el formulario se envíe
+        }
+    </script>
+
+    <!-- Incluye Bootstrap JS (opcional, si necesitas funcionalidad de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
